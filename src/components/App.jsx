@@ -10,36 +10,43 @@ class App extends React.Component {
     neutral: 0,
     bad: 0,
   };
+
   countTotalFeedback = () => {
     return this.state.good + this.state.neutral + this.state.bad;
   };
   countPositiveFeedbackPercentage = () => {
     return (this.state.good / this.countTotalFeedback()) * 100;
   };
-  handleClickGood = () => {
+
+  handleClick = element => {
     this.setState(prevState => ({
-      good: prevState.good + 1,
+      [element]: prevState[element] + 1,
     }));
   };
 
-  handleClickNeutral = () => {
-    this.setState(prevState => ({
-      neutral: prevState.neutral + 1,
-    }));
-  };
-  handleClickBad = () => {
-    this.setState(prevState => ({
-      bad: prevState.bad + 1,
-    }));
-  };
+  // handleClickGood = () => {
+  //   this.setState(prevState => ({
+  //     good: prevState.good + 1,
+  //   }));
+  // };
+
+  // handleClickNeutral = () => {
+  //   this.setState(prevState => ({
+  //     neutral: prevState.neutral + 1,
+  //   }));
+  // };
+  // handleClickBad = () => {
+  //   this.setState(prevState => ({
+  //     bad: prevState.bad + 1,
+  //   }));
+  // };
   render() {
     return (
       <>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            onGood={this.handleClickGood}
-            onNeutral={this.handleClickNeutral}
-            onBad={this.handleClickBad}
+            options={Object.keys(this.state)}
+            onAddFeedback={this.handleClick}
           />
         </Section>
         {this.countTotalFeedback() > 0 ? (
